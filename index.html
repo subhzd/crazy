@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en" class="dark bg-[#fdfbf7] dark:bg-[#25211e]">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Crazy Ones | A Timeless Archive</title>
+    
+    <!-- SEO & Social Meta Tags -->
+    <meta name="description" content="A digital sanctuary for innovators, misfits, and rebels. Explore the iconic quotes and moments that defined Apple's legacy.">
+    <meta name="keywords" content="Apple, Steve Jobs, Innovation, Archive, Inspiration, Design, Quotes">
+    <meta name="author" content="AIMaverick">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://crazy.aimaverick.me/">
+    <meta property="og:title" content="The Crazy Ones | A Timeless Archive">
+    <meta property="og:description" content="A digital sanctuary for innovators, misfits, and rebels. Explore the iconic quotes and moments that defined Apple's legacy.">
+    <meta property="og:image" content="https://crazy.aimaverick.me/crazy.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://crazy.aimaverick.me/">
+    <meta property="twitter:title" content="The Crazy Ones | A Timeless Archive">
+    <meta property="twitter:description" content="A digital sanctuary for innovators, misfits, and rebels. Explore the iconic quotes and moments that defined Apple's legacy.">
+    <meta property="twitter:image" content="https://crazy.aimaverick.me/crazy.png">
+
+    <!-- Icons -->
+    <link rel="icon" type="image/png" href="crazy.png">
+    <link rel="apple-touch-icon" href="crazy.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Instant Theme Initialization (Forced Dark Default) -->
+    <script>
+        // Only switch to light if the user explicitly saved 'light' previously. Otherwise, default to dark.
+        if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.remove('dark')
+        } else {
+            document.documentElement.classList.add('dark')
+        }
+        
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Inter"', 'system-ui', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+                        cursive: ['"Dancing Script"', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+        
+        body {
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Animated Cinematic Film Grain */
+        @keyframes filmGrain {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-1%, -1%); }
+            20% { transform: translate(1%, -2%); }
+            30% { transform: translate(-2%, 1%); }
+            40% { transform: translate(1%, 2%); }
+            50% { transform: translate(-1%, 2%); }
+            60% { transform: translate(2%, -1%); }
+            70% { transform: translate(-2%, 1%); }
+            80% { transform: translate(1%, -2%); }
+            90% { transform: translate(-1%, 1%); }
+        }
+
+        .texture-bg {
+            position: fixed;
+            top: -20%; left: -20%; width: 140vw; height: 140vh;
+            z-index: -1;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.08;
+            animation: filmGrain 6s steps(10) infinite;
+            transition: opacity 0.5s ease;
+        }
+        html.dark .texture-bg {
+            opacity: 0.04;
+        }
+
+        /* Rustic Card Styling & 3D Prep */
+        .rustic-card {
+            border-radius: 8px;
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+            box-shadow: 2px 4px 12px rgba(74, 63, 53, 0.05), inset 0 0 20px rgba(220, 200, 180, 0.1);
+            transform-style: preserve-3d; /* For Vanilla Tilt */
+        }
+        
+        /* The inner content needs to pop out slightly during the 3D tilt */
+        .tilt-inner {
+            transform: translateZ(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .rustic-card:hover {
+            box-shadow: 4px 12px 30px rgba(74, 63, 53, 0.15), inset 0 0 20px rgba(220, 200, 180, 0.2);
+            border-color: #b85c38;
+        }
+
+        html.dark .rustic-card {
+            box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        html.dark .rustic-card:hover {
+            box-shadow: 4px 12px 30px rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(0, 0, 0, 0.2);
+            border-color: #d97b56;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #eaddcf; }
+        html.dark ::-webkit-scrollbar-thumb { background: #463e38; }
+
+        /* Theme Toggle Icon Logic */
+        #theme-icon-sun { display: none; }
+        #theme-icon-moon { display: block; }
+        html.dark #theme-icon-sun { display: block; }
+        html.dark #theme-icon-moon { display: none; }
+
+        /* Animations */
+        @keyframes slideUpEnter {
+            0% { opacity: 0; transform: translateY(15px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-enter {
+            animation: slideUpEnter 0.5s ease-out both;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes slideUpFade {
+            0% { opacity: 0; transform: translate(-50%, 20px); }
+            10% { opacity: 1; transform: translate(-50%, 0); }
+            90% { opacity: 1; transform: translate(-50%, 0); }
+            100% { opacity: 0; transform: translate(-50%, -20px); }
+        }
+        .toast-animate { animation: slideUpFade 3s ease forwards; }
+
+        .drop-cap:first-letter {
+            float: left; font-size: 2.5rem; line-height: 0.8;
+            padding-right: 6px; padding-top: 4px;
+            font-family: "Playfair Display", serif;
+        }
+
+        /* Tab Transition utility */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease forwards;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body class="bg-[#fdfbf7] dark:bg-[#25211e] text-[#4a3f35] dark:text-[#dccfc2] relative min-h-screen pb-12 transition-colors duration-500">
+
+    <!-- Global Texture Overlay -->
+    <div class="texture-bg"></div>
+
+    <!-- Header Tools (Theme & View Mode) -->
+    <div class="absolute top-4 right-4 z-50 flex items-center space-x-2 md:space-x-3">
+        <!-- View Mode Toggle -->
+        <div class="flex items-center bg-[#fffaf0] dark:bg-[#2f2a26] border border-[#eaddcf] dark:border-[#463e38] rounded-md p-1 shadow-sm transition-colors duration-500">
+            <button onclick="setView('grid')" id="view-btn-grid" class="p-1.5 rounded bg-[#b85c38] dark:bg-[#d97b56] text-[#fdfbf7] dark:text-[#25211e] transition-colors" title="Grid View">
+                <svg class="w-3.5 h-3.5 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+            </button>
+            <button onclick="setView('list')" id="view-btn-list" class="p-1.5 rounded text-[#8b7d6e] dark:text-[#a39589] hover:text-[#4a3f35] dark:hover:text-[#dccfc2] transition-colors" title="List View">
+                <svg class="w-3.5 h-3.5 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </div>
+
+        <!-- Theme Toggle -->
+        <button onclick="toggleTheme()" class="p-2 rounded-md bg-[#fffaf0] dark:bg-[#2f2a26] border border-[#eaddcf] dark:border-[#463e38] hover:-translate-y-0.5 transition-transform text-[#4a3f35] dark:text-[#dccfc2] shadow-sm" title="Toggle Lighting">
+            <svg id="theme-icon-sun" class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            <svg id="theme-icon-moon" class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+        </button>
+    </div>
+
+    <!-- Header Section -->
+    <header class="relative pt-12 pb-4 px-4 max-w-4xl mx-auto text-center z-10 transition-colors duration-500">
+        <!-- App Icon: crazy.png with an SVG fallback -->
+        <img src="crazy.png" alt="The Crazy Ones App Icon" class="w-16 h-16 md:w-20 md:h-20 mx-auto mb-3 rounded-xl shadow-sm border border-[#eaddcf] dark:border-[#463e38] object-cover transition-colors duration-500 bg-[#fffaf0] dark:bg-[#2f2a26] p-1.5" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22none%22 viewBox=%220 0 24 24%22 stroke=%22%23b85c38%22%3E%3Cpath stroke-linecap=%22round%22 stroke-linejoin=%22round%22 stroke-width=%221%22 d=%22M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253%22/%3E%3C/svg%3E';">
+
+        <p class="text-[10px] md:text-xs font-semibold tracking-[0.2em] uppercase text-[#b85c38] dark:text-[#d97b56] mb-2 font-sans transition-colors duration-500">
+            A Source of Inspiration
+        </p>
+        <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-3 font-serif text-[#4a3f35] dark:text-[#dccfc2] transition-colors duration-500">
+            The Crazy Ones.
+        </h1>
+        <p class="text-sm md:text-base text-[#8b7d6e] dark:text-[#a39589] max-w-2xl mx-auto font-serif italic leading-relaxed transition-colors duration-500 mb-4">
+            A digital sanctuary for innovators, misfits, and rebels. Draw inspiration from the minds that pushed the human race forward by bridging technology with the liberal arts.
+        </p>
+
+        <!-- Tabs Switcher -->
+        <div class="flex justify-center mt-2">
+            <div class="inline-flex space-x-1.5 bg-[#fffaf0] dark:bg-[#2f2a26] p-1 rounded-lg border border-[#eaddcf] dark:border-[#463e38] shadow-sm transition-colors duration-500">
+                <button id="btn-tab-quotes" onclick="switchTab('quotes')" class="px-5 py-1.5 rounded-md text-xs md:text-sm font-sans font-medium bg-[#b85c38] dark:bg-[#d97b56] text-[#fdfbf7] dark:text-[#25211e] shadow-sm transition-colors duration-300">
+                    The Archive
+                </button>
+                <button id="btn-tab-videos" onclick="switchTab('videos')" class="px-5 py-1.5 rounded-md text-xs md:text-sm font-sans font-medium text-[#8b7d6e] dark:text-[#a39589] hover:text-[#4a3f35] dark:hover:text-[#dccfc2] transition-colors duration-300">
+                    Iconic Moments
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENT AREA -->
+    <main class="max-w-7xl mx-auto z-10 relative">
+
+        <!-- TAB 1: QUOTES -->
+        <div id="tab-quotes" class="tab-content active">
+            <!-- Filters Section -->
+            <div class="sticky top-0 z-30 py-2.5 mb-6 shadow-sm transition-colors duration-500 bg-[#fdfbf7]/80 dark:bg-[#25211e]/80 backdrop-blur-md">
+                <div class="max-w-7xl mx-auto px-4 overflow-x-auto no-scrollbar">
+                    <div class="flex space-x-2 md:justify-center" id="filter-container">
+                        <!-- Filters injected via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quotes Grid -->
+            <div class="px-4 pb-8">
+                <div id="quotes-grid">
+                    <!-- Cards injected via JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: VIDEOS -->
+        <div id="tab-videos" class="tab-content">
+            <div class="px-4 py-6">
+                <div class="mb-6 text-center md:text-left border-b border-[#eaddcf] dark:border-[#463e38] pb-4 transition-colors duration-500 max-w-4xl mx-auto md:max-w-none" id="videos-header">
+                    <h2 class="text-2xl md:text-3xl font-bold tracking-tight font-serif text-[#4a3f35] dark:text-[#dccfc2] mb-2 transition-colors duration-500">A Half-Century of Magic</h2>
+                    <p class="text-[#8b7d6e] dark:text-[#a39589] max-w-2xl text-sm md:text-base font-serif italic transition-colors duration-500">Watch the keynotes, commercials, and raw moments that redefined the intersection of art and engineering.</p>
+                </div>
+                <div id="videos-grid">
+                    <!-- Videos injected via JS -->
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Always Visible Thin Footer -->
+    <footer class="fixed bottom-0 left-0 w-full z-40 bg-[#fffaf0] dark:bg-[#2f2a26] border-t border-[#eaddcf] dark:border-[#463e38] py-2 px-4 shadow-md transition-colors duration-500">
+        <div class="max-w-7xl mx-auto flex justify-between items-center text-[10px] md:text-xs text-[#8b7d6e] dark:text-[#a39589] font-medium font-sans transition-colors duration-500">
+            <a href="https://aimaverick.me" target="_blank" rel="noopener noreferrer" class="hover:text-[#4a3f35] dark:hover:text-[#dccfc2] transition-colors duration-200">
+                &copy; 2026 @amsubhzd
+            </a>
+            <span class="italic font-serif">Designed by AIMaverick</span>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-12 left-1/2 transform -translate-x-1/2 bg-[#4a3f35] dark:bg-[#dccfc2] text-[#fffaf0] dark:text-[#2f2a26] px-5 py-2.5 rounded-md shadow-xl font-medium font-sans text-xs md:text-sm flex items-center space-x-2 z-50 opacity-0 pointer-events-none transition-colors duration-500">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        <span>Copied to clipboard. Stay hungry.</span>
+    </div>
+
+    <!-- 3D Tilt Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+
+    <script>
+        // --- Theme Toggle Logic ---
+        function toggleTheme() {
+            const html = document.documentElement;
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // --- Tab Switcher Logic ---
+        function switchTab(tabId) {
+            const btnQuotes = document.getElementById('btn-tab-quotes');
+            const btnVideos = document.getElementById('btn-tab-videos');
+            
+            const activeClasses = "px-5 py-1.5 rounded-md text-xs md:text-sm font-sans font-medium bg-[#b85c38] dark:bg-[#d97b56] text-[#fdfbf7] dark:text-[#25211e] shadow-sm transition-colors duration-300";
+            const inactiveClasses = "px-5 py-1.5 rounded-md text-xs md:text-sm font-sans font-medium text-[#8b7d6e] dark:text-[#a39589] hover:text-[#4a3f35] dark:hover:text-[#dccfc2] transition-colors duration-300";
+
+            if (tabId === 'quotes') {
+                btnQuotes.className = activeClasses;
+                btnVideos.className = inactiveClasses;
+                
+                document.getElementById('tab-quotes').classList.add('active');
+                document.getElementById('tab-videos').classList.remove('active');
+            } else {
+                btnVideos.className = activeClasses;
+                btnQuotes.className = inactiveClasses;
+                
+                document.getElementById('tab-videos').classList.add('active');
+                document.getElementById('tab-quotes').classList.remove('active');
+            }
+        }
+
+        // --- Data: Apple DNA Quotes ---
+        const quotes = [
+            { id: 1, text: "Here's to the crazy ones, the misfits, the rebels, the troublemakers... the ones who see things differently.", category: "Vision", author: "Steve Jobs", context: "Think Different Campaign", year: 1997 },
+            { id: 2, text: "There is beauty when something works and it works intuitively.", category: "Design", author: "Jony Ive", context: "Design Philosophy", year: 2014 },
+            { id: 3, text: "History rarely yields to one person, but think and never forget what happens when it does. That can be you. That should be you. That must be you.", category: "Vision", author: "Tim Cook", context: "Stanford Commencement Address", year: 2019 },
+            { id: 4, text: "Design is not just what it looks like and feels like. Design is how it works.", category: "Design", author: "Steve Jobs", context: "The New York Times", year: 2003 },
+            { id: 5, text: "Innovation distinguishes between a leader and a follower.", category: "Innovation", author: "Steve Jobs", context: "The Innovation Secrets", year: 2001 },
+            { id: 6, text: "We are all trying to be part of something bigger than ourselves.", category: "Vision", author: "Tim Cook", context: "Interview", year: 2015 },
+            { id: 7, text: "It's very easy to be different, but very difficult to be better.", category: "Design", author: "Jony Ive", context: "Fast Company", year: 2018 },
+            { id: 8, text: "It is in Apple's DNA that technology alone is not enough—it's technology married with liberal arts, married with the humanities, that yields us the results that make our heart sing.", category: "Vision", author: "Steve Jobs", context: "iPad 2 Keynote", year: 2011 },
+            { id: 9, text: "I'm as proud of many of the things we haven't done as the things we have done. Innovation is saying no to a thousand things.", category: "Innovation", author: "Steve Jobs", context: "WWDC", year: 1997 },
+            { id: 10, text: "Leaving things better than you found them.", category: "Values", author: "Tim Cook", context: "Environmental Initiative", year: 2014 },
+            { id: 11, text: "An iPod, a phone, and an internet communicator... these are not three separate devices. This is one device.", category: "Innovation", author: "Steve Jobs", context: "Macworld Keynote", year: 2007 },
+            { id: 12, text: "True simplicity is derived from so much more than just the absence of clutter and ornamentation. It's about bringing order to complexity.", category: "Design", author: "Jony Ive", context: "Documentary", year: 2013 },
+            { id: 13, text: "My goal wasnt to make a ton of money. It was to build good computers. I only wanted to build computers to show off to my friends.", category: "Vision", author: "Steve Wozniak", context: "Apple's Early Days", year: 1976 },
+            { id: 14, text: "Artists work best alone. Work alone.", category: "Innovation", author: "Steve Wozniak", context: "iWoz Autobiography", year: 2006 },
+            { id: 15, text: "The best design is the one you don't even notice. It just works, seamlessly.", category: "Design", author: "Tony Fadell", context: "Product Philosophy", year: 2005 },
+            { id: 16, text: "Simple can be harder than complex: You have to work hard to get your thinking clean to make it simple. But it's worth it in the end.", category: "Design", author: "Steve Jobs", context: "BusinessWeek", year: 1998 },
+            { id: 17, text: "My favorite things in life don't cost any money. It's really clear that the most precious resource we all have is time.", category: "Life", author: "Steve Jobs", context: "Playboy Interview", year: 1985 },
+            { id: 18, text: "Sometimes when you innovate, you make mistakes. It is best to admit them quickly, and get on with improving your other innovations.", category: "Innovation", author: "Steve Jobs", context: "The Journey Is the Reward", year: 1989 },
+            { id: 19, text: "I'm convinced that about half of what separates the successful entrepreneurs from the non-successful ones is pure perseverance.", category: "Vision", author: "Steve Jobs", context: "Smithsonian Interview", year: 1995 },
+            { id: 20, text: "Your time is limited, so don't waste it living someone else's life. Don't be trapped by dogma.", category: "Life", author: "Steve Jobs", context: "Stanford Commencement Address", year: 2005 },
+            { id: 21, text: "You can't connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.", category: "Vision", author: "Steve Jobs", context: "Stanford Commencement Address", year: 2005 }
+        ];
+
+        // --- Data: Iconic Video Moments ---
+        const videos = [
+            {
+                id: 1,
+                title: "1984 Macintosh Commercial",
+                description: "Directed by Ridley Scott, this legendary Super Bowl commercial introduced the Macintosh and established Apple as a challenger to the status quo.",
+                url: "https://www.youtube.com/watch?v=VtvjbmoDx-I"
+            },
+            {
+                id: 2,
+                title: "Think Different (1997)",
+                description: "The iconic manifesto that marked Steve Jobs' return to Apple, realigning the company with its core values of empowering the crazy ones.",
+                url: "https://www.youtube.com/watch?v=5sMBhDv4sik"
+            },
+            {
+                id: 3,
+                title: "The First iMac G3 (1998)",
+                description: "Hello (again). Steve Jobs introduces the vibrant, translucent computer that broke the beige box mold and saved Apple from bankruptcy.",
+                url: "https://www.youtube.com/watch?v=0BHPtoTctDY"
+            },
+            {
+                id: 4,
+                title: "1,000 Songs in Your Pocket (2001)",
+                description: "The introduction of the original iPod. A masterclass in product positioning that forever changed the music industry.",
+                url: "https://www.youtube.com/watch?v=mE_bDNaYAr8"
+            },
+            {
+                id: 5,
+                title: "The First iPhone (2007)",
+                description: "Steve Jobs masterfully unveils three devices—an iPod, a phone, and an internet communicator—fused into one revolutionary product.",
+                url: "https://www.youtube.com/watch?v=MnrJzXM7a6o"
+            },
+            {
+                id: 6,
+                title: "The Envelope Reveal (2008)",
+                description: "In a stunning display of engineering and showmanship, Steve Jobs pulls the world's thinnest notebook, the MacBook Air, out of a standard manila office envelope.",
+                url: "https://www.youtube.com/watch?v=1CxoJ_tozUM"
+            },
+            {
+                id: 7,
+                title: "Technology & Liberal Arts (2011)",
+                description: "At the iPad 2 launch, Apple explicitly states its guiding philosophy: operating at the magical intersection of technology and the humanities.",
+                url: "https://www.youtube.com/watch?v=sUCpuaqlISQ"
+            },
+            {
+                id: 8,
+                title: "Stanford Commencement Address (2005)",
+                description: "Steve Jobs reflects on connecting the dots, love, loss, and death, leaving the audience with the enduring mantra: 'Stay hungry. Stay foolish.'",
+                url: "https://www.youtube.com/watch?v=UF8uR6Z6KLc"
+            },
+            {
+                id: 9,
+                title: "Designing the Apple Watch (2014)",
+                description: "Jony Ive narrates the meticulous design process behind Apple's first completely new product category post-Jobs, emphasizing material mastery.",
+                url: "https://www.youtube.com/watch?v=CBPxJMPwOPM"
+            },
+            {
+                id: 10,
+                title: "Get a Mac Campaign (2006)",
+                description: "The brilliantly simple and humorous 'Mac vs. PC' ads that personified the brand's ease of use and creative appeal.",
+                url: "https://www.youtube.com/watch?v=qfv6AKyGOIY"
+            },
+            {
+                id: 11,
+                title: "iPod Silhouettes (2003)",
+                description: "The striking, high-contrast dancing silhouette commercials that made the white earbuds a universal cultural symbol.",
+                url: "https://youtu.be/IJTpLtw7vn0?si=a-8Yd4k7K7Wi7cV6"
+            },
+            {
+                id: 12,
+                title: "The First iPad (2010)",
+                description: "Steve Jobs introduces the iPad, carving out an entirely new category of devices between the smartphone and the laptop.",
+                url: "https://www.youtube.com/watch?v=OBhZWXEmZ1g"
+            },
+            {
+                id: 13,
+                title: "The App Store Announcement (2008)",
+                description: "A pivotal moment where Apple opened the iPhone to third-party developers, sparking a multi-billion dollar app economy.",
+                url: "https://www.youtube.com/watch?v=3-B2a8mBng"
+            },
+            {
+                id: 14,
+                title: "Designed by Apple in California (2013)",
+                description: "The 'Our Signature' film that beautifully articulated Apple's dedication to creating experiences that elicit emotion and joy.",
+                url: "https://www.youtube.com/watch?v=CEW4D_CERkE"
+            },
+            {
+                id: 15,
+                title: "Steve Jobs' Return to Macworld (1997)",
+                description: "The historic keynote where Steve Jobs returned to a struggling Apple, announcing the Microsoft partnership that helped save the company.",
+                url: "https://www.youtube.com/watch?v=IOs6hnTI4lw"
+            }
+        ];
+
+        // --- App State & DOM ---
+        let currentFilter = 'All';
+        let currentView = 'grid'; // 'grid' | 'list'
+        const categories = ['All', ...new Set(quotes.map(q => q.category))];
+
+        const filterContainer = document.getElementById('filter-container');
+        const quotesGrid = document.getElementById('quotes-grid');
+        const videosGrid = document.getElementById('videos-grid');
+        const videosHeader = document.getElementById('videos-header');
+        const toast = document.getElementById('toast');
+
+        // --- Initialization ---
+        function init() {
+            renderFilters();
+            renderQuotes();
+            renderVideos(); 
+        }
+
+        // --- View Mode Toggle ---
+        function setView(view) {
+            currentView = view;
+            
+            const btnGrid = document.getElementById('view-btn-grid');
+            const btnList = document.getElementById('view-btn-list');
+            
+            const activeClass = "p-1.5 rounded bg-[#b85c38] dark:bg-[#d97b56] text-[#fdfbf7] dark:text-[#25211e] transition-colors";
+            const inactiveClass = "p-1.5 rounded text-[#8b7d6e] dark:text-[#a39589] hover:text-[#4a3f35] dark:hover:text-[#dccfc2] transition-colors";
+
+            if (view === 'grid') {
+                btnGrid.className = activeClass;
+                btnList.className = inactiveClass;
+            } else {
+                btnList.className = activeClass;
+                btnGrid.className = inactiveClass;
+            }
+
+            renderQuotes();
+            renderVideos();
+        }
+
+        // --- Render Filters ---
+        function renderFilters() {
+            filterContainer.innerHTML = '';
+            categories.forEach(category => {
+                const btn = document.createElement('button');
+                
+                let classes = "px-4 py-1.5 rounded-md border text-[11px] md:text-xs font-sans font-medium whitespace-nowrap cursor-pointer transition-colors duration-300 ";
+                
+                if (currentFilter === category) {
+                    classes += "bg-[#b85c38] dark:bg-[#d97b56] text-[#fdfbf7] dark:text-[#25211e] border-transparent shadow-sm";
+                } else {
+                    classes += "bg-[#fffaf0] dark:bg-[#2f2a26] text-[#8b7d6e] dark:text-[#a39589] border-[#eaddcf] dark:border-[#463e38] hover:bg-[#efece7] dark:hover:bg-[#3d3731]";
+                }
+                
+                btn.className = classes;
+                btn.innerText = category;
+                btn.onclick = () => {
+                    currentFilter = category;
+                    renderFilters();
+                    renderQuotes();
+                };
+                filterContainer.appendChild(btn);
+            });
+        }
+
+        // --- Init 3D Vanilla Tilt ---
+        function initializeTilt() {
+            if (typeof VanillaTilt !== 'undefined') {
+                const cards = document.querySelectorAll(".rustic-card");
+                VanillaTilt.init(cards, {
+                    max: 4,
+                    speed: 600,
+                    glare: true,
+                    "max-glare": 0.08,
+                    scale: 1.01,
+                    perspective: 1000
+                });
+            }
+        }
+
+        // --- Render Quotes ---
+        function renderQuotes() {
+            quotesGrid.innerHTML = '';
+            
+            // Adjust container classes based on view
+            if (currentView === 'grid') {
+                quotesGrid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5';
+            } else {
+                quotesGrid.className = 'flex flex-col space-y-4 md:space-y-6 max-w-4xl mx-auto';
+            }
+
+            const filteredQuotes = currentFilter === 'All' 
+                ? quotes 
+                : quotes.filter(q => q.category === currentFilter);
+
+            filteredQuotes.forEach((quote, index) => {
+                const delay = index * 30; 
+                const card = document.createElement('div');
+                card.style.animationDelay = `${delay}ms`;
+                
+                if (currentView === 'grid') {
+                    card.className = 'rustic-card bg-[#fffaf0] dark:bg-[#2f2a26] border border-[#eaddcf] dark:border-[#463e38] p-5 flex flex-col justify-between h-full group relative animate-enter';
+                    card.innerHTML = `
+                        <div class="relative z-10 tilt-inner">
+                            <div class="flex justify-between items-center mb-4 border-b border-[#eaddcf] dark:border-[#463e38] pb-2.5 transition-colors duration-500">
+                                <span class="text-[10px] font-sans tracking-widest uppercase text-[#b85c38] dark:text-[#d97b56] transition-colors duration-500">${quote.category}</span>
+                                <span class="font-serif text-xl md:text-2xl text-[#eaddcf] dark:text-[#463e38] leading-none transition-colors duration-500">”</span>
+                            </div>
+                            <p class="font-serif text-base md:text-lg leading-relaxed mb-4 text-[#4a3f35] dark:text-[#dccfc2] drop-cap transition-colors duration-500">
+                                <span class="text-[#b85c38] dark:text-[#d97b56]">${quote.text.charAt(0)}</span>${quote.text.slice(1)}
+                            </p>
+                        </div>
+                        
+                        <div class="mt-auto relative z-10 flex justify-between items-end pt-3 tilt-inner">
+                            <div class="w-full mr-3">
+                                <p class="text-xl md:text-2xl text-[#4a3f35] dark:text-[#dccfc2] font-cursive mb-0.5 opacity-90 transition-colors duration-500">${quote.author}</p>
+                                <p class="text-[10px] text-[#8b7d6e] dark:text-[#a39589] font-sans transition-colors duration-500">${quote.context}, ${quote.year}</p>
+                            </div>
+                            
+                            <div class="flex items-center space-x-1.5 z-20">
+                                <button onclick="copyToClipboard('${quote.text.replace(/'/g, "\\'")}', '${quote.author}')" class="w-7 h-7 md:w-8 md:h-8 flex items-center justify-center bg-[#fdfbf7] dark:bg-[#25211e] hover:bg-[#efece7] dark:hover:bg-[#3d3731] transition-colors rounded-md border border-[#eaddcf] dark:border-[#463e38] text-[#8b7d6e] dark:text-[#a39589]" title="Copy Quote">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                </button>
+                                <button onclick="shareQuote('${quote.text.replace(/'/g, "\\'")}', '${quote.author}')" class="w-7 h-7 md:w-8 md:h-8 flex items-center justify-center bg-[#fdfbf7] dark:bg-[#25211e] hover:bg-[#efece7] dark:hover:bg-[#3d3731] transition-colors rounded-md border border-[#eaddcf] dark:border-[#463e38] text-[#8b7d6e] dark:text-[#a39589]" title="Share">
+                                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    // List View Layout for Quotes
+                    card.className = 'rustic-card bg-[#fffaf0] dark:bg-[#2f2a26] border border-[#eaddcf] dark:border-[#463e38] p-6 md:p-8 flex flex-col md:flex-row group relative animate-enter';
+                    card.innerHTML = `
+                        <div class="tilt-inner flex flex-col md:flex-row w-full">
+                            <div class="relative z-10 flex-grow md:pr-8">
+                                <div class="flex justify-between items-center mb-4 md:mb-5 border-b border-[#eaddcf] dark:border-[#463e38] pb-2.5 transition-colors duration-500">
+                                    <span class="text-[10px] md:text-xs font-sans tracking-widest uppercase text-[#b85c38] dark:text-[#d97b56] transition-colors duration-500">${quote.category}</span>
+                                    <span class="font-serif text-2xl md:text-3xl text-[#eaddcf] dark:text-[#463e38] leading-none transition-colors duration-500">”</span>
+                                </div>
+                                <p class="font-serif text-lg md:text-xl leading-relaxed mb-0 text-[#4a3f35] dark:text-[#dccfc2] drop-cap transition-colors duration-500">
+                                    <span class="text-[#b85c38] dark:text-[#d97b56]">${quote.text.charAt(0)}</span>${quote.text.slice(1)}
+                                </p>
+                            </div>
+                            
+                            <div class="relative z-10 flex flex-row md:flex-col justify-between items-end md:items-end pt-4 md:pt-0 tilt-inner md:w-56 flex-shrink-0 border-t md:border-t-0 md:border-l border-[#eaddcf] dark:border-[#463e38] mt-4 md:mt-0 md:pl-8">
+                                <div class="w-full text-left md:text-right mb-0 md:mb-6">
+                                    <p class="text-xl md:text-3xl text-[#4a3f35] dark:text-[#dccfc2] font-cursive mb-1 opacity-90 transition-colors duration-500">${quote.author}</p>
+                                    <p class="text-[10px] md:text-xs text-[#8b7d6e] dark:text-[#a39589] font-sans transition-colors duration-500">${quote.context}, ${quote.year}</p>
+                                </div>
+                                
+                                <div class="flex items-center space-x-2 z-20">
+                                    <button onclick="copyToClipboard('${quote.text.replace(/'/g, "\\'")}', '${quote.author}')" class="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center bg-[#fdfbf7] dark:bg-[#25211e] hover:bg-[#efece7] dark:hover:bg-[#3d3731] transition-colors rounded-md border border-[#eaddcf] dark:border-[#463e38] text-[#8b7d6e] dark:text-[#a39589]" title="Copy Quote">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                    </button>
+                                    <button onclick="shareQuote('${quote.text.replace(/'/g, "\\'")}', '${quote.author}')" class="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center bg-[#fdfbf7] dark:bg-[#25211e] hover:bg-[#efece7] dark:hover:bg-[#3d3731] transition-colors rounded-md border border-[#eaddcf] dark:border-[#463e38] text-[#8b7d6e] dark:text-[#a39589]" title="Share">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                quotesGrid.appendChild(card);
+            });
+
+            // Re-bind tilt events for newly created cards
+            setTimeout(initializeTilt, 50);
+        }
+
+        // --- Render Video Section ---
+        function renderVideos() {
+            videosGrid.innerHTML = '';
+            
+            // Adjust container classes based on view
+            if (currentView === 'grid') {
+                videosGrid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5';
+                videosHeader.className = 'mb-6 text-center md:text-left border-b border-[#eaddcf] dark:border-[#463e38] pb-4 transition-colors duration-500 max-w-4xl mx-auto md:max-w-none';
+            } else {
+                videosGrid.className = 'flex flex-col space-y-3 md:space-y-4 max-w-4xl mx-auto';
+                videosHeader.className = 'mb-6 text-center md:text-left border-b border-[#eaddcf] dark:border-[#463e38] pb-4 transition-colors duration-500 max-w-4xl mx-auto';
+            }
+
+            videos.forEach((video, index) => {
+                const delay = index * 40; 
+                const card = document.createElement('a');
+                card.href = video.url;
+                card.target = "_blank";
+                card.rel = "noopener noreferrer";
+                card.style.animationDelay = `${delay}ms`;
+
+                if (currentView === 'grid') {
+                    card.className = 'rustic-card bg-[#fffaf0] dark:bg-[#2f2a26] border border-[#eaddcf] dark:border-[#463e38] p-4 md:p-5 flex flex-col group cursor-pointer hover:bg-[#efece7] dark:hover:bg-[#3d3731] transition-colors duration-500 h-full animate-enter block';
+                    card.innerHTML = `
+                        <div class="tilt-inner h-full flex flex-col">
+                            <div class="flex items-center space-x-3 mb-3">
+                                <div class="flex-shrink-0">
+                                    <div class="w-10 h-10 rounded-md bg-[#fdfbf7] dark:bg-[#25211e] border border-[#eaddcf] dark:border-[#463e38] flex items-center justify-center text-[#4a3f35] dark:text-[#dccfc2] group-hover:bg-[#b85c38] dark:group-hover:bg-[#d97b56] group-hover:text-[#fdfbf7] dark:group-hover:text-[#25211e] group-hover:border-transparent transition-colors duration-300 shadow-sm">
+                                        <svg class="w-4 h-4 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                    </div>
+                                </div>
+                                <h3 class="text-base md:text-lg font-serif font-bold text-[#4a3f35] dark:text-[#dccfc2] leading-tight transition-colors duration-500 group-hover:text-[#b85c38] dark:group-hover:text-[#d97b56]">${video.title}</h3>
+                            </div>
+                            <p class="text-xs font-sans text-[#8b7d6e] dark:text-[#a39589] leading-relaxed transition-colors duration-500 flex-grow">${video.description}</p>
+                            <div class="mt-3 pt-3 border-t border-[#eaddcf] dark:border-[#463e38] flex items-center text-[11px] font-sans font-medium text-[#b85c38] dark:text-[#d97b56] group-hover:text-[#4a3f35] dark:group-hover:text-[#dccfc2] transition-colors duration-300">
+                                <span>Watch on YouTube</span>
+                                <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    // List View Layout for Videos
+                    card.className = 'rustic-card bg-[#fffaf0] dark:bg-[#2f2a26] border border-[#eaddcf] dark:border-[#463e38] p-4 md:p-5 flex flex-col md:flex-row group cursor-pointer hover:bg-[#efece7] dark:hover:bg-[#3d3731] transition-colors duration-500 h-auto animate-enter block';
+                    card.innerHTML = `
+                        <div class="tilt-inner w-full flex flex-col md:flex-row md:items-center">
+                            <div class="flex items-center space-x-4 mb-3 md:mb-0 md:w-1/3 flex-shrink-0">
+                                <div class="w-12 h-12 rounded-md bg-[#fdfbf7] dark:bg-[#25211e] border border-[#eaddcf] dark:border-[#463e38] flex items-center justify-center text-[#4a3f35] dark:text-[#dccfc2] group-hover:bg-[#b85c38] dark:group-hover:bg-[#d97b56] group-hover:text-[#fdfbf7] dark:group-hover:text-[#25211e] group-hover:border-transparent transition-colors duration-300 shadow-sm flex-shrink-0">
+                                    <svg class="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                                <h3 class="text-base md:text-lg font-serif font-bold text-[#4a3f35] dark:text-[#dccfc2] leading-tight transition-colors duration-500 group-hover:text-[#b85c38] dark:group-hover:text-[#d97b56]">${video.title}</h3>
+                            </div>
+                            
+                            <div class="flex-grow md:border-l md:border-[#eaddcf] dark:md:border-[#463e38] md:pl-6 md:pr-4">
+                                <p class="text-xs md:text-sm font-sans text-[#8b7d6e] dark:text-[#a39589] leading-relaxed transition-colors duration-500">${video.description}</p>
+                            </div>
+                            
+                            <div class="mt-3 md:mt-0 pt-3 md:pt-0 border-t md:border-t-0 border-[#eaddcf] dark:border-[#463e38] flex items-center justify-end md:justify-center text-[11px] md:text-xs font-sans font-medium text-[#b85c38] dark:text-[#d97b56] group-hover:text-[#4a3f35] dark:group-hover:text-[#dccfc2] transition-colors duration-300 md:w-28 flex-shrink-0">
+                                <span>Watch</span>
+                                <svg class="w-3.5 h-3.5 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                videosGrid.appendChild(card);
+            });
+
+            // Re-bind tilt events for newly created cards
+            setTimeout(initializeTilt, 50);
+        }
+
+        // --- Viral/Share Features ---
+        function copyToClipboard(text, author) {
+            const fullText = `"${text}" — ${author} \n\nDiscovered on The Crazy Ones: A Timeless Archive`;
+            
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(fullText).then(showToast);
+            } else {
+                const textArea = document.createElement("textarea");
+                textArea.value = fullText;
+                textArea.style.position = "fixed";
+                textArea.style.left = "-999999px";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showToast();
+                } catch (err) {
+                    console.error('Fallback: Oops, unable to copy', err);
+                }
+                document.body.removeChild(textArea);
+            }
+        }
+
+        function showToast() {
+            toast.classList.remove('toast-animate');
+            void toast.offsetWidth; 
+            toast.classList.add('toast-animate');
+        }
+
+        function shareQuote(text, author) {
+            const tweetText = encodeURIComponent(`"${text}" — ${author}\n\n#TheCrazyOnes #Innovation`);
+            const url = `https://twitter.com/intent/tweet?text=${tweetText}`;
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+
+        // Initialize App on load
+        document.addEventListener('DOMContentLoaded', init);
+
+    </script>
+
+    <script>window.va=window.va||function(){(window.va.q=window.va.q||[]).push(arguments)};</script><script src="/_vercel/insights/script.js"></script>
+    <script>window.si=window.si||function(){(window.siq=window.siq||[]).push(arguments)};</script><script src="/_vercel/speed-insights/script.js"></script>    
+    
+</body>
+</html>
