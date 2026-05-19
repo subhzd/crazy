@@ -54,7 +54,8 @@
     </script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+        /* Including VT323 for the 1984 Easter Egg */
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=VT323&display=swap');
         
         body {
             overflow-x: hidden;
@@ -89,6 +90,21 @@
             opacity: 0.04;
         }
 
+        /* Dynamic Spotlight Cursor Effect */
+        #cursor-glow {
+            pointer-events: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            z-index: 0; 
+            background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(184, 92, 56, 0.05), transparent 40%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        html.dark #cursor-glow {
+            background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.035), transparent 40%);
+        }
+
         /* Rustic Card Styling & 3D Prep */
         .rustic-card {
             border-radius: 8px;
@@ -116,6 +132,29 @@
             border-color: #d97b56;
         }
 
+        /* Easter Egg: 1984 Retro Mode */
+        .retro-mode {
+            filter: grayscale(100%) contrast(140%) brightness(1.1);
+            animation: crt-flicker 0.15s infinite alternate;
+        }
+        
+        .retro-mode * {
+            font-family: 'VT323', monospace !important;
+            letter-spacing: 0.5px !important;
+        }
+
+        /* CRT Scanlines */
+        .retro-mode::after {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 9998;
+            background-size: 100% 3px, 3px 100%;
+            pointer-events: none;
+        }
+
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: transparent; }
@@ -130,6 +169,11 @@
         html.dark #theme-icon-moon { display: none; }
 
         /* Animations */
+        @keyframes crt-flicker {
+            0% { opacity: 0.95; }
+            100% { opacity: 1; }
+        }
+
         @keyframes slideUpEnter {
             0% { opacity: 0; transform: translateY(15px); }
             100% { opacity: 1; transform: translateY(0); }
@@ -178,10 +222,10 @@
     <div class="absolute top-4 right-4 z-50 flex items-center space-x-2 md:space-x-3">
         <!-- View Mode Toggle -->
         <div class="flex items-center bg-[#fffaf0] dark:bg-[#2f2a26] border border-[#eaddcf] dark:border-[#463e38] rounded-md p-1 shadow-sm transition-colors duration-500">
-            <button onclick="setView('grid')" id="view-btn-grid" class="p-1.5 rounded bg-[#b85c38] dark:bg-[#d97b56] text-[#fdfbf7] dark:text-[#25211e] transition-colors" title="Grid View">
+            <button onclick="setView('grid')" id="view-btn-grid" class="p-1.5 rounded text-[#8b7d6e] dark:text-[#a39589] hover:text-[#4a3f35] dark:hover:text-[#dccfc2] transition-colors" title="Grid View">
                 <svg class="w-3.5 h-3.5 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
             </button>
-            <button onclick="setView('list')" id="view-btn-list" class="p-1.5 rounded text-[#8b7d6e] dark:text-[#a39589] hover:text-[#4a3f35] dark:hover:text-[#dccfc2] transition-colors" title="List View">
+            <button onclick="setView('list')" id="view-btn-list" class="p-1.5 rounded bg-[#b85c38] dark:bg-[#d97b56] text-[#fdfbf7] dark:text-[#25211e] transition-colors" title="List View">
                 <svg class="w-3.5 h-3.5 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
             </button>
         </div>
@@ -278,6 +322,43 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
 
     <script>
+        // --- Cursor Spotlight Effect ---
+        const glowOverlay = document.createElement('div');
+        glowOverlay.id = 'cursor-glow';
+        document.body.appendChild(glowOverlay);
+
+        document.addEventListener('mousemove', (e) => {
+            glowOverlay.style.setProperty('--mouse-x', `${e.clientX}px`);
+            glowOverlay.style.setProperty('--mouse-y', `${e.clientY}px`);
+            if (glowOverlay.style.opacity === '0' || glowOverlay.style.opacity === '') {
+                glowOverlay.style.opacity = '1';
+            }
+        });
+        
+        document.addEventListener('mouseleave', () => {
+            glowOverlay.style.opacity = '0';
+        });
+
+        // --- 1984 Easter Egg ---
+        let keyHistory = [];
+        const konamiCode = ['1','9','8','4'];
+        const macCode = ['m','a','c'];
+        
+        document.addEventListener('keydown', (e) => {
+            keyHistory.push(e.key.toLowerCase());
+            if (keyHistory.length > 4) keyHistory.shift(); // Keep only last 4
+            
+            if (keyHistory.join('') === konamiCode.join('') || 
+                keyHistory.slice(-3).join('') === macCode.join('')) {
+                document.body.classList.toggle('retro-mode');
+                
+                // Show retro toast notification
+                const isRetro = document.body.classList.contains('retro-mode');
+                showToast(isRetro ? "1984 Mode Activated. Hello." : "Welcome back to the present.");
+                keyHistory = []; // Reset history
+            }
+        });
+
         // --- Theme Toggle Logic ---
         function toggleTheme() {
             const html = document.documentElement;
@@ -410,13 +491,13 @@
                 id: 12,
                 title: "The First iPad (2010)",
                 description: "Steve Jobs introduces the iPad, carving out an entirely new category of devices between the smartphone and the laptop.",
-                url: "https://www.youtube.com/watch?v=OBhZWXEmZ1g"
+                url: "https://youtu.be/Ndnmtz8-S5I?si=ESKAaesTnAoaqrTT"
             },
             {
                 id: 13,
                 title: "The App Store Announcement (2008)",
                 description: "A pivotal moment where Apple opened the iPhone to third-party developers, sparking a multi-billion dollar app economy.",
-                url: "https://www.youtube.com/watch?v=3-B2a8mBng"
+                url: "https://youtu.be/xo9cKe_Fch8?si=2tZt8yUy8kc10jlj"
             },
             {
                 id: 14,
@@ -434,7 +515,7 @@
 
         // --- App State & DOM ---
         let currentFilter = 'All';
-        let currentView = 'grid'; // 'grid' | 'list'
+        let currentView = 'list'; // 'grid' | 'list'
         const categories = ['All', ...new Set(quotes.map(q => q.category))];
 
         const filterContainer = document.getElementById('filter-container');
@@ -446,8 +527,7 @@
         // --- Initialization ---
         function init() {
             renderFilters();
-            renderQuotes();
-            renderVideos(); 
+            setView(currentView); // This initializes the correct styling and calls the render functions
         }
 
         // --- View Mode Toggle ---
@@ -678,7 +758,7 @@
             const fullText = `"${text}" — ${author} \n\nDiscovered on The Crazy Ones: A Timeless Archive`;
             
             if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(fullText).then(showToast);
+                navigator.clipboard.writeText(fullText).then(() => showToast());
             } else {
                 const textArea = document.createElement("textarea");
                 textArea.value = fullText;
@@ -697,7 +777,12 @@
             }
         }
 
-        function showToast() {
+        function showToast(customMessage = null) {
+            const toastSpan = document.querySelector('#toast span');
+            const defaultMessage = "Copied to clipboard. Stay hungry.";
+            
+            toastSpan.innerText = customMessage || defaultMessage;
+            
             toast.classList.remove('toast-animate');
             void toast.offsetWidth; 
             toast.classList.add('toast-animate');
@@ -716,6 +801,6 @@
 
     <script>window.va=window.va||function(){(window.va.q=window.va.q||[]).push(arguments)};</script><script src="/_vercel/insights/script.js"></script>
     <script>window.si=window.si||function(){(window.siq=window.siq||[]).push(arguments)};</script><script src="/_vercel/speed-insights/script.js"></script>    
-    
+
 </body>
 </html>
